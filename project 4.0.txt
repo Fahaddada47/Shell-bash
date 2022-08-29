@@ -1,0 +1,35 @@
+#!/bin/sh
+echo "Enter Your Birth date : (between 1901-2099)"
+
+echo "Don't enter a invalid date"
+
+echo "Follow this[yearmonthdate] format:" 
+read d
+day=${d#??????}
+temp=${d#????}
+month=${temp%??}
+year=${d%????} 
+
+echo D=$day" "M=$month" "Y=$year
+if [ `expr $year % 4` -eq 0 ]
+then
+	echo "$year is a leap year"
+
+else
+	echo "$year is not leap year"
+fi
+if [ $month -eq 02 ]  && [ $day -eq 29 ]
+then 
+echo "Your bithday in feb 29"
+echo "So,your next birthday is in March 01 "
+fi
+echo "Born Day of week=" 
+date -d$d  +%A
+
+echo "your next 5 years Birthday of week is: "
+
+ for (( YEAR=2022; YEAR<=2026; YEAR++ ))
+ do
+echo "In $YEAR Date of Week is=$(cal $month $YEAR | awk 'BEGIN{split("Sunday Monday Tuesday Wednesday Thursday Friday Saturday",dow);dow[0]=dow[7]}
+NR==3{t=7-NF+d;print dow[t%7];exit}' d=$day)"
+done
